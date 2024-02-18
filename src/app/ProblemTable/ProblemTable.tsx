@@ -1,25 +1,45 @@
-import { problems } from "@/mockProblems/MockProblem"
+"use client"
+// import { problems } from "@/mockProblems/MockProblem"
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
+ 
+import { firestore } from "../firebase/firebase";
 // import YouTube from "react-youtube";
-// import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+ import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 // import { auth, firestore } from "@/firebase/firebase";
-// import { DBProblem } from "@/utils/types/problem";
+//  import { DBProblem } from "@/utils/types/problem";
+import { DBProblem } from "../utils/types/problem";
 // import { useAuthState } from "react-firebase-hooks/auth";
+
 export default function ProblemTable(){
+	const [problems,setProblems] = useState<DBProblem[]>([])
+	const getProblems =async () => {
+		const q = query(collection(firestore,"problems"),orderBy("order","asc"));
+		const querySnapshot = await getDocs(q);
+		const temp:DBProblem[] = [];
+		querySnapshot.forEach((doc) => {
+			temp.push( {id : doc.id, ...doc.data()} as DBProblem);
+		});
+		setProblems(temp)
+	}
+	useEffect( ()=>{
+		getProblems();
+		
+	},[])
     return(
         <>
         <tbody className='text-white'>
 				{problems.map((problem, idx) => {
 					const difficulyColor =
-						problem.difficulty === "Easy"
-							? "text-dark-green-s"
-							: problem.difficulty === "Medium"
-							? "text-dark-yellow"
-							: "text-dark-pink";
+						problem?.difficulty === "Easy"
+							? "text-green-500"
+							: problem?.difficulty === "Medium"
+							? "text-yellow-500"
+							: "text-pink-500";
 					return (
 						<tr className={`${idx % 2 == 1 ? "bg-dark-layer-1" : ""}`} key={problem.id}>
 							<th className='px-2 py-4 font-medium whitespace-nowrap text-dark-green-s'>
@@ -37,7 +57,7 @@ export default function ProblemTable(){
 								) : (
 									<Link
 										className='hover:text-blue-600 cursor-pointer'
-										href={`/problems/${problem.id}`}
+										href={`/ProblemPage/two-sum`}
 									>
 										{problem.title}
 									</Link>
