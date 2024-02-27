@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
-import {app}  from  "@/app/firebase/firebase";
+import {app, firestore}  from  "@/app/firebase/firebase";
+import { setDoc ,doc} from "firebase/firestore";
 // import { useRouter } from "next/router";
 import { auth } from "@/app/firebase/firebase";
 interface NavbarProps {
@@ -29,18 +30,31 @@ const handleChangeInput = (e:React.ChangeEvent<HTMLInputElement>) => {
     console.log("handlechange");
     setInputs({ ...inputs ,[e.target.name]: e.target.value });
 }
-    const handleRegister = async () => {
+    const handleRegister = async (e:any) => {
         console.log("innnn")
-// e.preventDefault();
+ e.preventDefault();
 if(!inputs.email || !inputs.password||!inputs.name){
 return alert("please fill all the fields");
 }
 try {
     console.log(inputs.email,inputs.password)
     const newUser = await createUserWithEmailAndPassword(auth,inputs.email,inputs.password);
-    console.log("new user",newUser)
+    console.log("new user",newUser.user.uid)
      if(!newUser)return;
     //  router.push("/");
+    const userData = {
+        uid:newUser.user.uid,
+        name:inputs.name,
+        email:newUser.user.email,
+        createdAt:Date.now(),
+        updatedAt:Date.now(),
+        likedProblems:[],
+        dislikedProblems:[],
+        solvedProblems:[],
+        starredProblems:[],
+    }
+    await setDoc(doc(firestore, "users", newUser.user.uid), userData);
+ alert("Account Created Successfully!");
 
 } catch (error:any) {
     alert(error.message)

@@ -17,8 +17,18 @@ import { DBProblem } from "../utils/types/problem";
 
 export default function ProblemTable(){
 	const [problems,setProblems] = useState<DBProblem[]>([])
+	const [solvedProblems,setSolvedProblems] = useState([])
 	const getProblems =async () => {
 		const q = query(collection(firestore,"problems"),orderBy("order","asc"));
+		const querySnapshot = await getDocs(q);
+		const temp:DBProblem[] = [];
+		querySnapshot.forEach((doc) => {
+			temp.push( {id : doc.id, ...doc.data()} as DBProblem);
+		});
+		setProblems(temp)
+	}
+	const getUser =async () => {
+		const q = query(collection(firestore,"users"));
 		const querySnapshot = await getDocs(q);
 		const temp:DBProblem[] = [];
 		querySnapshot.forEach((doc) => {
@@ -32,8 +42,10 @@ export default function ProblemTable(){
 	},[])
     return(
         <>
+		
         <tbody className='text-white'>
 				{problems.map((problem, idx) => {
+					
 					const difficulyColor =
 						problem?.difficulty === "Easy"
 							? "text-green-500"
@@ -57,7 +69,7 @@ export default function ProblemTable(){
 								) : (
 									<Link
 										className='hover:text-blue-600 cursor-pointer'
-										href={`/ProblemPage/two-sum`}
+										href={`/ProblemPage/${problem.id}`}
 									>
 										{problem.title}
 									</Link>

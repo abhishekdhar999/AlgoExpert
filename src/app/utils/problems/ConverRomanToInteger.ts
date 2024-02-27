@@ -1,44 +1,40 @@
 import { Problem } from "../types/problem";
 import assert from "assert";
 
-
-const starterCodeTwoSum = `function twoSum(nums,target){
+const starterCodeConverRomanToInteger = `function convertRomanToInteger(string){
     // Write your code here
   };`;
   
-  const handlerTwoSum = (fn: any) => {
+  const handleconvertRomanToInteger = (fn: any) => {
 	// fn is the callback that user's code is passed into
 	try {
-		const nums = [
-			[2, 7, 11, 15],
-			[3, 2, 4],
-			[3, 3],
+		const strings = [
+			"ix","xl","mcmiv"
 		];
 
-		const targets = [9, 6, 6];
+		// const targets = [15, 23, 39];
 		const answers = [
-			[0, 1],
-			[1, 2],
-			[0, 1],
+			9,40,1904
 		];
 
 		// loop all tests to check if the user's code is correct
-		for (let i = 0; i < nums.length; i++) {
+		for (let i = 0; i < strings.length; i++) {
 			// result is the output of the user's function and answer is the expected output
-			const result = fn(nums[i], targets[i]);
+			const result = fn(strings[i]);
+            console.log("result",result)
 			assert.deepStrictEqual(result, answers[i]);
 		}
 		return true;
 	} catch (error: any) {
-		console.log("twoSum handler function error");
+		console.log("convert roman to integer handler function error");
 		throw new Error(error);
 	}
 };
-export {handlerTwoSum };
+export {handleconvertRomanToInteger };
 
-export const twoSum: Problem = {
-id:"two-sum",
-title:"1. Two Sum",
+export const convertRomanToInteger: Problem = {
+id:"convertRomanToInteger",
+title:"1. convert Roman Number To Integer",
 problemStatement:`<p class='mt-3'>
 Given an array of integers <code>nums</code> and an integer <code>target</code>, return
 <em>indices of the two numbers such that they add up to</em> <code>target</code>.
@@ -51,20 +47,20 @@ may not use thesame element twice.
 examples:[
     {
         id: 1,
-        inputText: "nums = [2,7,11,15], target = 9",
-        outputText: "[0,1]",
-        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
+        inputText: "string = ix",
+        outputText: "9",
+        explanation: "Because ix in roman numeral is 9",
     },
     {
         id: 2,
-        inputText: "nums = [3,2,4], target = 6",
-        outputText: "[1,2]",
-        explanation: "Because nums[1] + nums[2] == 6, we return [1, 2].",
+        inputText: "string = xl",
+        outputText: "40",
+        explanation: "Because xl in roman is 40 as x=10 and l=50.",
     },
     {
         id: 3,
-        inputText: " nums = [3,3], target = 6",
-        outputText: "[0,1]",
+        inputText: " string = mcmiv",
+        outputText: "1904",
     },
 ],
 constraints: `<li class='mt-2'>
@@ -78,8 +74,8 @@ constraints: `<li class='mt-2'>
 <strong>Only one valid answer exists.</strong>
 </li>`,
 
-	handlerFunction: handlerTwoSum ,
-	starterCode: starterCodeTwoSum,
-	order: 1,
-	starterFunctionName: "function twoSum(",
+	handlerFunction: handleconvertRomanToInteger ,
+	starterCode: starterCodeConverRomanToInteger,
+	order: 3,
+	starterFunctionName: "function convertRomanToInteger(",
 }

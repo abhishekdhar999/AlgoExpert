@@ -1,25 +1,22 @@
 import { Problem } from "../types/problem";
 import assert from "assert";
 
-
-const starterCodeTwoSum = `function twoSum(nums,target){
+const starterCodeSearchInArray = `function searchInArray(nums,target){
     // Write your code here
   };`;
   
-  const handlerTwoSum = (fn: any) => {
+  const handleSearchInArray = (fn: any) => {
 	// fn is the callback that user's code is passed into
 	try {
 		const nums = [
 			[2, 7, 11, 15],
-			[3, 2, 4],
-			[3, 3],
+			[3,8,23,56,99],
+			[3,3,6,9,12,34,56,67,89,90],
 		];
 
-		const targets = [9, 6, 6];
+		const targets = [15, 23, 39];
 		const answers = [
-			[0, 1],
-			[1, 2],
-			[0, 1],
+			true,true,false
 		];
 
 		// loop all tests to check if the user's code is correct
@@ -34,11 +31,11 @@ const starterCodeTwoSum = `function twoSum(nums,target){
 		throw new Error(error);
 	}
 };
-export {handlerTwoSum };
+export {handleSearchInArray };
 
-export const twoSum: Problem = {
-id:"two-sum",
-title:"1. Two Sum",
+export const searchInArray: Problem = {
+id:"searchInArray",
+title:"1. Search Element In Array",
 problemStatement:`<p class='mt-3'>
 Given an array of integers <code>nums</code> and an integer <code>target</code>, return
 <em>indices of the two numbers such that they add up to</em> <code>target</code>.
@@ -51,20 +48,20 @@ may not use thesame element twice.
 examples:[
     {
         id: 1,
-        inputText: "nums = [2,7,11,15], target = 9",
-        outputText: "[0,1]",
-        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
+        inputText: "nums = [2,7,11,15], target = 15",
+        outputText: "true",
+        explanation: "Because nums[3] =  15, we return true",
     },
     {
         id: 2,
-        inputText: "nums = [3,2,4], target = 6",
-        outputText: "[1,2]",
-        explanation: "Because nums[1] + nums[2] == 6, we return [1, 2].",
+        inputText: "nums = [3,8,23,56,99], target = 23",
+        outputText: "true",
+        explanation: "Because nums[2] = 23, we return true.",
     },
     {
         id: 3,
-        inputText: " nums = [3,3], target = 6",
-        outputText: "[0,1]",
+        inputText: " nums = [3,3,6,9,12,34,56,67,89,90], target = 39",
+        outputText: "false",
     },
 ],
 constraints: `<li class='mt-2'>
@@ -78,8 +75,8 @@ constraints: `<li class='mt-2'>
 <strong>Only one valid answer exists.</strong>
 </li>`,
 
-	handlerFunction: handlerTwoSum ,
-	starterCode: starterCodeTwoSum,
+	handlerFunction: handleSearchInArray ,
+	starterCode: starterCodeSearchInArray,
 	order: 1,
-	starterFunctionName: "function twoSum(",
+	starterFunctionName: "function searchInArray(",
 }

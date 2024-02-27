@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from "react-icons/ai";
+import { ISettings } from "../CodeEditor";
 // import { ISettings } from "../";
 // import SettingsModal from "@/components/Modals/SettingsModal";
 
@@ -8,7 +9,11 @@ import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from "
 // 	settings: ISettings;
 // 	setSettings: React.Dispatch<React.SetStateAction<ISettings>>;
 // };
-export default function CodeEditorNavbar(){
+type PreferenceNavProps = {
+	settings: ISettings;
+	setSettings: React.Dispatch<React.SetStateAction<ISettings>>;
+};
+export default function CodeEditorNavbar({settings,setSettings}:PreferenceNavProps) {
     const [isFullScreen, setIsFullScreen] = useState(false);
 
 	const handleFullScreen = () => {
