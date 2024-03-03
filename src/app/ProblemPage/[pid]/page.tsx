@@ -53,7 +53,7 @@ const {pid} = params;
   const id  = pid.toString();
   const problemss = problems[id];
     console.log(problemss);
-    if(!problemss) throw new Error("not found burrag")
+    if(!problemss) throw new Error("not found problrm problem-page")
     
     problemss.handlerFunction = problemss.handlerFunction.toString(); 
 //     return{
