@@ -34,15 +34,15 @@ export default function ToDoList({setShowToDoList,showToDoList}:ToDoListProps) {
                 
             }
     const [ len,setLen] = useState(1)
-    const [task , setTask] = useState({text:"",id:len+1});
+    const [task , setTask] = useState({text:""});
     const [change,setChange] = useState(false)
     let leng = 1;
     const handleAdd = async ()=>{
-        leng++;
-        console.log("len",len)
+        
+        
         if(user){
-            setLen(len+1);
-            addTaskToUser(user?.uid,task)
+            
+            addTaskToUser(user!.uid,task)
         }else{
             return;
         }
@@ -63,6 +63,8 @@ export default function ToDoList({setShowToDoList,showToDoList}:ToDoListProps) {
         const userDocRef = doc(firestore, "users", userId); // Get a reference to the user's document
         
         try {
+            let maxId = finalTasks.length > 0 ? Math.max(...finalTasks.map((task: { id: number; }) => task.id)) : 0;
+            task.id = maxId + 1;
           await updateDoc(userDocRef, {
             tasks: arrayUnion(task) // Add the new task to the tasks array
           });
@@ -112,7 +114,7 @@ export default function ToDoList({setShowToDoList,showToDoList}:ToDoListProps) {
             {/* <!-- Modal header --> */}
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    Terms of Service
+                    Make Your Daily Tasks...
                 </h3>
                 <button onClick={()=>setShowToDoList(false)} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
